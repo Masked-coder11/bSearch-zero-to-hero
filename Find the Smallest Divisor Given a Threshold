@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool check(vector<int>&nums, int t, int val){
+        int sum=0;
+        for(auto it:nums){
+            sum+=ceil((double)it/val);
+            if(sum>t) return false;
+        }
+        return sum<=t;
+    }
+
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int lo=1, hi=0, ans=-1;
+        for(auto it:nums) hi=max(hi, it);
+
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            if(check(nums, threshold, mid)){
+                ans=mid;
+                hi=mid-1;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
+        return ans;
+    }
+};
