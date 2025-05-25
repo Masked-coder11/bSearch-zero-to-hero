@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool check(vector<int>&weights, int days, int val){
+        int currWt= 0;
+        int currDay=1;
+        for(auto it:weights){
+            if(currWt + it <=val){
+                currWt+=it;
+            }
+            else{
+                currDay++;
+                currWt=it;
+            }
+
+            if(currDay>days) return false;
+        }
+        return currDay<=days;
+    }
+
+    int shipWithinDays(vector<int>& weights, int days) {
+        int lo=0, hi=0, ans=-1;
+        for(auto it: weights){
+            lo= max(lo, it);
+            hi+=it;
+        }
+
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            if(check(weights, days, mid)){
+                ans=mid;
+                hi=mid-1;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
+        return ans;
+    }
+};
