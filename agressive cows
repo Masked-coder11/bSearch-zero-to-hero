@@ -1,0 +1,36 @@
+class Solution {
+  public:
+  
+    bool check(vector<int>&A, int k, int val){
+        int last=A[0];
+        int placed=1;
+        for(int i=1;i<A.size();i++){
+            if(A[i]-last>=val){
+                placed++;
+                last=A[i];
+            }
+        }
+        return placed>=k;
+    }
+
+    int aggressiveCows(vector<int> &stalls, int k) {
+
+        // Write your code here
+        int n=stalls.size();
+        sort(stalls.begin(), stalls.end());
+        int lo=0, hi=stalls[n-1]-stalls[0];
+        int ans=-1;
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            if(check(stalls, k, mid)){
+                ans = mid;
+                lo=mid+1;
+            }
+            else{
+                hi=mid-1;
+            }
+        }
+        return ans;
+        
+    }
+};
