@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool check(vector<int>&arr, int k, int val){
+        int sub=1, sum=0;
+        for(auto it:arr){
+            if(sum+it <= val){
+                sum+=it;
+            }
+            else{
+                sub++;
+                sum=it;
+            }
+        }
+        return sub<=k;
+    }
+
+    int splitArray(vector<int>& nums, int k) {
+        int n=nums.size();
+        if (k > n) return -1;
+        int lo=0, hi=0, ans=-1;
+        for(auto it:nums){
+            lo=max(lo, it);
+            hi+=it;
+        }
+
+        if(k==1) return hi;
+        if(k==n) return lo;
+
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            if(check(nums, k, mid)){
+                ans=mid;
+                hi=mid-1;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
+        return ans;
+    }
+};
