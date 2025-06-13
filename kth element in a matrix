@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    int func(vector<vector<int>>&mat, int val){
+        int count=0;
+        for(auto it:mat){
+            count += upper_bound(it.begin(), it.end(), val) - it.begin();
+            
+        }
+        return count;
+    }
+  
+    int kthSmallest(vector<vector<int>> &mat, int k) {
+        // code here
+        int n=mat.size(), m=mat[0].size();
+        int lo=mat[0][0], hi=mat[n-1][m-1];
+        int ans=-1;
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            int count = func(mat, mid);
+            
+            if(count < k){
+                lo=mid+1;
+            }
+            else{
+                ans=mid;
+                hi=mid-1;
+            }
+        }
+        return ans;
+    }
+};
